@@ -1,0 +1,34 @@
+networks:
+    internal_network:
+        external: true
+
+services:
+    station:
+        image: scc-registry.lancs.ac.uk/teaching/scc_439/station:24
+        container_name: station
+        environment:
+            - CONTAINER_NAME=station
+        networks:
+            internal_network:
+                ipv4_address: 172.20.0.2
+        volumes:
+            - /workspace/station:/workspace/station
+            # Mount dotfiles from devcontainer host
+            - /root/.zshrc:/root/.zshrc
+            - /root/.oh-my-zsh:/root/.oh-my-zsh
+            # - /root/.gitconfig:/root/.gitconfig
+
+    tester:
+        image: scc-registry.lancs.ac.uk/teaching/scc_439/tester:24
+        container_name: tester
+        environment:
+            - CONTAINER_NAME=tester
+        networks:
+            internal_network:
+                ipv4_address: 172.20.0.3
+        volumes:
+            - /workspace/tester:/workspace/tester
+            # Mount dotfiles from devcontainer host
+            - /root/.zshrc:/root/.zshrc
+            - /root/.oh-my-zsh:/root/.oh-my-zsh
+            # - /root/.gitconfig:/root/.gitconfig
